@@ -4,7 +4,7 @@ using System.Text;
 
 namespace iLeafDecor.Data.Entities
 {
-    public class CategoriesTranslation
+    public class CategoryTranslation
     {
         public int ID { get; set; }
         public int CategoryID { get; set; }
@@ -13,5 +13,9 @@ namespace iLeafDecor.Data.Entities
         public string SeoTittle { get; set; }
         public int LanguageID { get; set; }
         public string SeoAlias { get; set; }
+
+        public Category Category { get; set; }
+
+        public Language Language { get; set; }
     }
 }

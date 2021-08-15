@@ -14,6 +14,8 @@ namespace iLeafDecor.Data.Entities
         public string ShipAddress { get; set; }
         public string ShipEmail { get; set; }
         public int ShipPhoneNumber { get; set; }
-        public Status Status { get; set; }
+        public OrderStatus Status { get; set; }
+
+        public List<OrderDetail> OrderDetails { get; set; }
     }
 }
