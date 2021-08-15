@@ -10,7 +10,7 @@ using iLeafDecor.Data.EF;
 namespace iLeafDecor.Data.Migrations
 {
     [DbContext(typeof(ILeafDBContext))]
-    [Migration("20210815140309_Initial")]
+    [Migration("20210815152203_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,23 @@ namespace iLeafDecor.Data.Migrations
                     b.HasKey("Key");
 
                     b.ToTable("AppConfigs");
+
+                    b.HasData(
+                        new
+                        {
+                            Key = "HomeTitle",
+                            Value = "This is home page of iLeaf Decor"
+                        },
+                        new
+                        {
+                            Key = "HomeKeyword",
+                            Value = "This is keyword of iLeaf Decor"
+                        },
+                        new
+                        {
+                            Key = "HomeDescription",
+                            Value = "This is description of iLeaf Decor"
+                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.AppUser", b =>
@@ -156,6 +173,22 @@ namespace iLeafDecor.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            IsShowOnHome = true,
+                            SortOrder = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            IsShowOnHome = true,
+                            SortOrder = 2,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.CategoryTranslation", b =>
@@ -170,10 +203,11 @@ namespace iLeafDecor.Data.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int>("LanguageID")
+                    b.Property<string>("LanguageID")
+                        .IsRequired()
                         .HasMaxLength(5)
                         .IsUnicode(false)
-                        .HasColumnType("int");
+                        .HasColumnType("varchar(5)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -200,6 +234,48 @@ namespace iLeafDecor.Data.Migrations
                     b.HasIndex("LanguageID");
 
                     b.ToTable("CategoryTranslations");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CategoryID = 1,
+                            LanguageID = "vi-VN",
+                            Name = "Ngoại thất",
+                            SeoAlias = "ngoai-that",
+                            SeoDescription = "Sản phẩm ngoại thất",
+                            SeoTittle = "Sản phẩm ngoại thất"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CategoryID = 1,
+                            LanguageID = "en-US",
+                            Name = "Outdoors",
+                            SeoAlias = "outdoors",
+                            SeoDescription = "The products for outdoor decor",
+                            SeoTittle = "The products for outdoor decor"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CategoryID = 2,
+                            LanguageID = "vi-VN",
+                            Name = "Phòng ngủ",
+                            SeoAlias = "phong-ngu",
+                            SeoDescription = "Sản phẩm nội thất phòng ngủ",
+                            SeoTittle = "Sản phẩm nội thất phòng ngủ"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            CategoryID = 2,
+                            LanguageID = "en-US",
+                            Name = "Bedroom",
+                            SeoAlias = "bedroom",
+                            SeoDescription = "The products for bedroom decor",
+                            SeoTittle = "The products for bedroom decor"
+                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.Contact", b =>
@@ -240,12 +316,10 @@ namespace iLeafDecor.Data.Migrations
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.Language", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("ID")
                         .HasMaxLength(5)
                         .IsUnicode(false)
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("varchar(5)");
 
                     b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
@@ -258,6 +332,20 @@ namespace iLeafDecor.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Languages");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = "vi-VN",
+                            IsDefault = true,
+                            Name = "Tiếng Việt"
+                        },
+                        new
+                        {
+                            ID = "en-US",
+                            IsDefault = false,
+                            Name = "English"
+                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.Order", b =>
@@ -344,10 +432,6 @@ namespace iLeafDecor.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("SeoAlias")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Stock")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -361,6 +445,16 @@ namespace iLeafDecor.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedDate = new DateTime(2021, 8, 15, 22, 22, 2, 788, DateTimeKind.Local).AddTicks(6550),
+                            Price = 200000m,
+                            Stock = 0,
+                            ViewCount = 0
+                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.ProductInCategory", b =>
@@ -376,6 +470,13 @@ namespace iLeafDecor.Data.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("ProductInCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            ProductID = 1
+                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.ProductTranslation", b =>
@@ -394,10 +495,11 @@ namespace iLeafDecor.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("LanguageID")
+                    b.Property<string>("LanguageID")
+                        .IsRequired()
                         .HasMaxLength(5)
                         .IsUnicode(false)
-                        .HasColumnType("int");
+                        .HasColumnType("varchar(5)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -425,6 +527,32 @@ namespace iLeafDecor.Data.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("ProductTranslations");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Description = "Ghế treo hai chỗ ngồi ngoài trời - Màu xám",
+                            Details = "Ghế treo hai chỗ ngồi ngoài trời - Màu xám",
+                            LanguageID = "vi-VN",
+                            Name = "Ghế treo hai chỗ ngồi ngoài trời - Màu xám",
+                            ProductID = 1,
+                            SeoAlias = "ghe-treo-hai-cho-ngoi-ngoai-troi",
+                            SeoDescription = "Ghế treo hai chỗ ngồi ngoài trời - Màu xám",
+                            SeoTittle = "Ghế treo hai chỗ ngồi ngoài trời - Màu xám"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Description = "Outdoor Two Seater Wicker Hanging Chair - Grey",
+                            Details = "Outdoor Two Seater Wicker Hanging Chair - Grey",
+                            LanguageID = "en-US",
+                            Name = "Outdoor Two Seater Wicker Hanging Chair - Grey",
+                            ProductID = 1,
+                            SeoAlias = "outdoor-two-seater-wicker-hanging-chair-grey",
+                            SeoDescription = "Outdoor Two Seater Wicker Hanging Chair - Grey",
+                            SeoTittle = "Outdoor Two Seater Wicker Hanging Chair - Grey"
+                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.Promotion", b =>
