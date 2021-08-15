@@ -11,7 +11,6 @@ namespace iLeafDecor.Data.Entities
         public int Stock { get; set; }
         public int ViewCount { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string SeoAlias { get; set; }
 
         public List<ProductInCategory> ProductInCategories { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }

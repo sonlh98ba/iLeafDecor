@@ -84,8 +84,7 @@ namespace iLeafDecor.Data.Migrations
                 name: "Languages",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", unicode: false, maxLength: 5, nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -103,8 +102,7 @@ namespace iLeafDecor.Data.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     ViewCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SeoAlias = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -195,7 +193,7 @@ namespace iLeafDecor.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     SeoDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     SeoTittle = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    LanguageID = table.Column<int>(type: "int", unicode: false, maxLength: 5, nullable: false),
+                    LanguageID = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false),
                     SeoAlias = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
@@ -280,7 +278,7 @@ namespace iLeafDecor.Data.Migrations
                     Details = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     SeoDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SeoTittle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LanguageID = table.Column<int>(type: "int", unicode: false, maxLength: 5, nullable: false),
+                    LanguageID = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false),
                     SeoAlias = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
@@ -324,6 +322,64 @@ namespace iLeafDecor.Data.Migrations
                         principalTable: "Products",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AppConfigs",
+                columns: new[] { "Key", "Value" },
+                values: new object[,]
+                {
+                    { "HomeTitle", "This is home page of iLeaf Decor" },
+                    { "HomeKeyword", "This is keyword of iLeaf Decor" },
+                    { "HomeDescription", "This is description of iLeaf Decor" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "ID", "IsShowOnHome", "ParentID", "SortOrder", "Status" },
+                values: new object[,]
+                {
+                    { 1, true, null, 1, 1 },
+                    { 2, true, null, 2, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Languages",
+                columns: new[] { "ID", "IsDefault", "Name" },
+                values: new object[,]
+                {
+                    { "vi-VN", true, "Tiếng Việt" },
+                    { "en-US", false, "English" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "ID", "CreatedDate", "Price" },
+                values: new object[] { 1, new DateTime(2021, 8, 15, 22, 22, 2, 788, DateTimeKind.Local).AddTicks(6550), 200000m });
+
+            migrationBuilder.InsertData(
+                table: "CategoryTranslations",
+                columns: new[] { "ID", "CategoryID", "LanguageID", "Name", "SeoAlias", "SeoDescription", "SeoTittle" },
+                values: new object[,]
+                {
+                    { 1, 1, "vi-VN", "Ngoại thất", "ngoai-that", "Sản phẩm ngoại thất", "Sản phẩm ngoại thất" },
+                    { 3, 2, "vi-VN", "Phòng ngủ", "phong-ngu", "Sản phẩm nội thất phòng ngủ", "Sản phẩm nội thất phòng ngủ" },
+                    { 2, 1, "en-US", "Outdoors", "outdoors", "The products for outdoor decor", "The products for outdoor decor" },
+                    { 4, 2, "en-US", "Bedroom", "bedroom", "The products for bedroom decor", "The products for bedroom decor" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductInCategories",
+                columns: new[] { "CategoryID", "ProductID" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "ProductTranslations",
+                columns: new[] { "ID", "Description", "Details", "LanguageID", "Name", "ProductID", "SeoAlias", "SeoDescription", "SeoTittle" },
+                values: new object[,]
+                {
+                    { 1, "Ghế treo hai chỗ ngồi ngoài trời - Màu xám", "Ghế treo hai chỗ ngồi ngoài trời - Màu xám", "vi-VN", "Ghế treo hai chỗ ngồi ngoài trời - Màu xám", 1, "ghe-treo-hai-cho-ngoi-ngoai-troi", "Ghế treo hai chỗ ngồi ngoài trời - Màu xám", "Ghế treo hai chỗ ngồi ngoài trời - Màu xám" },
+                    { 2, "Outdoor Two Seater Wicker Hanging Chair - Grey", "Outdoor Two Seater Wicker Hanging Chair - Grey", "en-US", "Outdoor Two Seater Wicker Hanging Chair - Grey", 1, "outdoor-two-seater-wicker-hanging-chair-grey", "Outdoor Two Seater Wicker Hanging Chair - Grey", "Outdoor Two Seater Wicker Hanging Chair - Grey" }
                 });
 
             migrationBuilder.CreateIndex(
