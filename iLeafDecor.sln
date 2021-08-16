@@ -8,11 +8,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLeafDecor.WebApp", "iLeafDecor.WebApp\iLeafDecor.WebApp.csproj", "{BD56306D-1C99-4BA9-8FFE-FB10889F4511}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iLeafDecor.WebApp", "iLeafDecor.WebApp\iLeafDecor.WebApp.csproj", "{BD56306D-1C99-4BA9-8FFE-FB10889F4511}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLeafDecor.Application", "iLeafDecor.Application\iLeafDecor.Application.csproj", "{B9E62328-A64D-415C-A462-268F9FBBC45C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iLeafDecor.Application", "iLeafDecor.Application\iLeafDecor.Application.csproj", "{B9E62328-A64D-415C-A462-268F9FBBC45C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLeafDecor.Data", "iLeafDecor.Data\iLeafDecor.Data.csproj", "{F1171661-D313-4EBD-823F-73F892F9D364}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iLeafDecor.Data", "iLeafDecor.Data\iLeafDecor.Data.csproj", "{F1171661-D313-4EBD-823F-73F892F9D364}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
