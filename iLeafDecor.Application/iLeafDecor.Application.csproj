@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\iLeafDecor.Data\iLeafDecor.Data.csproj" />
+    <ProjectReference Include="..\iLeafDecor.Ultilities\iLeafDecor.Ultilities.csproj" />
+  </ItemGroup>
+
 </Project>

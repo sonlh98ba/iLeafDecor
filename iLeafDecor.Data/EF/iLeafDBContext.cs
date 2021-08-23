@@ -57,6 +57,7 @@ namespace iLeafDecor.Data.EF
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
         public DbSet<CategoryTranslation> CategoriesTranslations { get; set; }
+        public DbSet<ProductInCategory> ProductInCategories { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
         public DbSet<Contact> Contacts { get; set; }
