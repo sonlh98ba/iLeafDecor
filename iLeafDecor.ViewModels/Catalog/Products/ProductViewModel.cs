@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace iLeafDecor.Application.Catalog.Products.DTOs
+namespace iLeafDecor.ViewModels.Catalog.Products
 {
     public class ProductViewModel
     {

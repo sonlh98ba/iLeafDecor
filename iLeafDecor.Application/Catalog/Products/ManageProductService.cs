@@ -1,13 +1,17 @@
-﻿using iLeafDecor.Application.Catalog.Products.DTOs;
-using iLeafDecor.Application.Catalog.Products.DTOs.Manage;
-using iLeafDecor.Application.DTOs;
+﻿using iLeafDecor.Application.Common;
 using iLeafDecor.Data.EF;
 using iLeafDecor.Data.Entities;
 using iLeafDecor.Ultilities.Exceptions;
+using iLeafDecor.ViewModels.Catalog.Products;
+using iLeafDecor.ViewModels.Catalog.Products.Manage;
+using iLeafDecor.ViewModels.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace iLeafDecor.Application.Catalog.Products
@@ -15,9 +19,11 @@ namespace iLeafDecor.Application.Catalog.Products
     public class ManageProductService : IManageProductService
     {
         private readonly ILeafDBContext _context;
-        public ManageProductService(ILeafDBContext context)
+        private readonly IStorageService _storageService;
+        public ManageProductService(ILeafDBContext context, IStorageService storageService)
         {
             _context = context;
+            _storageService = storageService;
         }
         public async Task<int> Create(ProductCreateRequest request)
         {
@@ -41,6 +47,23 @@ namespace iLeafDecor.Application.Catalog.Products
                     }
                 }
             };
+
+            // Save image
+            if (request.ThumbnailImage!= null)
+            {
+                product.ProductImages = new List<ProductImage>()
+                {
+                    new ProductImage()
+                    {
+                        Caption = "Thumbnail image",
+                        CreatedDate = DateTime.Now,
+                        FileSize = request.ThumbnailImage.Length,
+                        ImagePath = await SaveFile(request.ThumbnailImage),
+                        IsDefault = true,
+                        SortOrder = 1
+                    }
+                };
+            }
             _context.Products.Add(product);
             return await _context.SaveChangesAsync();
         }
@@ -58,6 +81,18 @@ namespace iLeafDecor.Application.Catalog.Products
             productTranslation.Description = request.Description;
             productTranslation.Details = request.Details;
 
+            //Save image
+            if (request.ThumbnailImage != null)
+            {
+                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductID == request.ID);
+                if (thumbnailImage != null)
+                {
+                    thumbnailImage.FileSize = request.ThumbnailImage.Length;
+                    thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
+                    _context.ProductImages.Update(thumbnailImage);
+                }
+            }
+
             return await _context.SaveChangesAsync();
         }
 
@@ -65,6 +100,13 @@ namespace iLeafDecor.Application.Catalog.Products
         {
             var product = await _context.Products.FindAsync();
             if (product == null) throw new ILeafException($"Cannot find product with id: {productID}");
+
+            var images = _context.ProductImages.Where(i => i.ProductID == productID);
+            foreach (var image in images)
+            {
+                await _storageService.DeleteFileAsync(image.ImagePath);
+            }
+
             _context.Products.Remove(product);
             return await _context.SaveChangesAsync();
         }
@@ -85,6 +127,26 @@ namespace iLeafDecor.Application.Catalog.Products
 
             product.Stock += addedQuantity;
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public Task<int> AddImages(int productID, List<IFormFile> files)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> RemoveImages(int imageID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdateImages(int imageID, string caption, bool isDefault)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ProductImageViewModel>> GetListImage(int productID)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task AddViewCount(int productID)
@@ -140,6 +202,14 @@ namespace iLeafDecor.Application.Catalog.Products
                 Items = data
             };
             return pagedResult;
+        }
+
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return fileName;
         }
     }
 }

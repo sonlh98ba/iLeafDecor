@@ -1,6 +1,6 @@
-﻿using iLeafDecor.Application.Catalog.Products.DTOs;
-using iLeafDecor.Application.Catalog.Products.DTOs.Public;
-using iLeafDecor.Application.DTOs;
+﻿using iLeafDecor.ViewModels.Catalog.Products;
+using iLeafDecor.ViewModels.Catalog.Products.Public;
+using iLeafDecor.ViewModels.Common;
 using System.Threading.Tasks;
 
 namespace iLeafDecor.Application.Catalog.Products

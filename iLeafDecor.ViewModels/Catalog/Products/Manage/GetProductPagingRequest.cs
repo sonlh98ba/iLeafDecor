@@ -1,9 +1,9 @@
-﻿using iLeafDecor.Application.DTOs;
+﻿using iLeafDecor.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace iLeafDecor.Application.Catalog.Products.DTOs.Manage
+namespace iLeafDecor.ViewModels.Catalog.Products.Manage
 {
     public class GetProductPagingRequest : PagingRequestBase
     {

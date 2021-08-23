@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace iLeafDecor.Application.Catalog.Products.DTOs.Manage
+namespace iLeafDecor.ViewModels.Catalog.Products.Manage
 {
-    public class ProductUpdateRequest
+    public class ProductCreateRequest
     {
-        public int ID { get; set; }
+        public decimal Price { get; set; }
+        public int Stock { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Details { get; set; }
@@ -14,5 +16,6 @@ namespace iLeafDecor.Application.Catalog.Products.DTOs.Manage
         public string SeoTittle { get; set; }
         public string LanguageID { get; set; }
         public string SeoAlias { get; set; }
+        public IFormFile ThumbnailImage { get; set; }
     }
 }

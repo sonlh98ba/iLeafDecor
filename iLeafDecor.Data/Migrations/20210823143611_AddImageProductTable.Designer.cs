@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iLeafDecor.Data.EF;
 
 namespace iLeafDecor.Data.Migrations
 {
     [DbContext(typeof(ILeafDBContext))]
-    partial class ILeafDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210823143611_AddImageProductTable")]
+    partial class AddImageProductTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,7 +182,7 @@ namespace iLeafDecor.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "ac8e37ad-85e8-4577-9cb5-a1ef5ddc1b7e",
+                            ConcurrencyStamp = "822224d5-cda9-45c1-b3f4-2adea6919010",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,7 +259,7 @@ namespace iLeafDecor.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc3765b0-3790-4006-98a4-1155fb1a7a04",
+                            ConcurrencyStamp = "e7b12471-86a1-4d0a-a779-db903d0d04d5",
                             DOB = new DateTime(1998, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "sonlh98ba@gmail.com",
                             EmailConfirmed = true,
@@ -266,7 +268,7 @@ namespace iLeafDecor.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "sonlh98ba@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAENm9NFXultBd2W2ppPg7NaBiDOHUJXHID4LSToQxncdsGc0HbQr1Q1+65JIraGQi4Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECVFTiMDHh9rP7KzK9xmL6MbdnD/WqDbbw742J1R4dxn+H+RXQxiaWkYX4WC0RLrjw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -608,7 +610,7 @@ namespace iLeafDecor.Data.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedDate = new DateTime(2021, 8, 23, 23, 22, 2, 754, DateTimeKind.Local).AddTicks(8623),
+                            CreatedDate = new DateTime(2021, 8, 23, 21, 36, 10, 454, DateTimeKind.Local).AddTicks(7001),
                             Price = 200000m,
                             Stock = 0,
                             ViewCount = 0
@@ -631,8 +633,8 @@ namespace iLeafDecor.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
+                    b.Property<int>("FileSize")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()

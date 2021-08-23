@@ -1,7 +1,7 @@
-﻿using iLeafDecor.Application.Catalog.Products.DTOs;
-using iLeafDecor.Application.Catalog.Products.DTOs.Public;
-using iLeafDecor.Application.DTOs;
-using iLeafDecor.Data.EF;
+﻿using iLeafDecor.Data.EF;
+using iLeafDecor.ViewModels.Catalog.Products;
+using iLeafDecor.ViewModels.Catalog.Products.Public;
+using iLeafDecor.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
