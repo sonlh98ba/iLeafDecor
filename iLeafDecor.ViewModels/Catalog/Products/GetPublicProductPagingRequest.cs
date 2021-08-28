@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace iLeafDecor.ViewModels.Catalog.Products.Public
+namespace iLeafDecor.ViewModels.Catalog.Products
 {
-    public class GetProductPagingRequest : PagingRequestBase
+    public class GetPublicProductPagingRequest : PagingRequestBase
     {
         public int? CategoryID { get; set; }
     }

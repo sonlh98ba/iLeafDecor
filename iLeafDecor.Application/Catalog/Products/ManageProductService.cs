@@ -3,7 +3,6 @@ using iLeafDecor.Data.EF;
 using iLeafDecor.Data.Entities;
 using iLeafDecor.Ultilities.Exceptions;
 using iLeafDecor.ViewModels.Catalog.Products;
-using iLeafDecor.ViewModels.Catalog.Products.Manage;
 using iLeafDecor.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -156,7 +155,7 @@ namespace iLeafDecor.Application.Catalog.Products
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request)
+        public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
             // Select all table
             var query = from p in _context.Products

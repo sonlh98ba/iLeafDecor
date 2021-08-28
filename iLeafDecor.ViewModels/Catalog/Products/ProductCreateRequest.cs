@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace iLeafDecor.ViewModels.Catalog.Products.Manage
+namespace iLeafDecor.ViewModels.Catalog.Products
 {
     public class ProductCreateRequest
     {

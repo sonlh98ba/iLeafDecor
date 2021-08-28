@@ -1,5 +1,4 @@
 ﻿using iLeafDecor.ViewModels.Catalog.Products;
-using iLeafDecor.ViewModels.Catalog.Products.Manage;
 using iLeafDecor.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -21,7 +20,7 @@ namespace iLeafDecor.Application.Catalog.Products
 
         Task AddViewCount(int productID);
 
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
         Task<int> AddImages(int productID, List<IFormFile> files);
         Task<int> RemoveImages(int imageID);
         Task<int> UpdateImages(int imageID, string caption, bool isDefault);
