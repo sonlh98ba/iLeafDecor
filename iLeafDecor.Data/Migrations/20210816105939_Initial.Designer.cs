@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iLeafDecor.Data.EF;
 
 namespace iLeafDecor.Data.Migrations
 {
     [DbContext(typeof(ILeafDBContext))]
-    partial class ILeafDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210816105939_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,13 +94,6 @@ namespace iLeafDecor.Data.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.ToTable("AppUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
-                            RoleId = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -175,16 +170,6 @@ namespace iLeafDecor.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "ac8e37ad-85e8-4577-9cb5-a1ef5ddc1b7e",
-                            Description = "Administrator role",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.AppUser", b =>
@@ -251,27 +236,6 @@ namespace iLeafDecor.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc3765b0-3790-4006-98a4-1155fb1a7a04",
-                            DOB = new DateTime(1998, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "sonlh98ba@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Son",
-                            LastName = "Le",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "sonlh98ba@gmail.com",
-                            NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAENm9NFXultBd2W2ppPg7NaBiDOHUJXHID4LSToQxncdsGc0HbQr1Q1+65JIraGQi4Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.Cart", b =>
@@ -608,51 +572,11 @@ namespace iLeafDecor.Data.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedDate = new DateTime(2021, 8, 23, 23, 22, 2, 754, DateTimeKind.Local).AddTicks(8623),
+                            CreatedDate = new DateTime(2021, 8, 16, 17, 59, 38, 819, DateTimeKind.Local).AddTicks(8203),
                             Price = 200000m,
                             Stock = 0,
                             ViewCount = 0
                         });
-                });
-
-            modelBuilder.Entity("iLeafDecor.Data.Entities.ProductImage", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Caption")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("iLeafDecor.Data.Entities.ProductInCategory", b =>
@@ -906,17 +830,6 @@ namespace iLeafDecor.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("iLeafDecor.Data.Entities.ProductImage", b =>
-                {
-                    b.HasOne("iLeafDecor.Data.Entities.Product", "Product")
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("iLeafDecor.Data.Entities.ProductInCategory", b =>
                 {
                     b.HasOne("iLeafDecor.Data.Entities.Category", "Category")
@@ -999,8 +912,6 @@ namespace iLeafDecor.Data.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("ProductImages");
 
                     b.Navigation("ProductInCategories");
 
