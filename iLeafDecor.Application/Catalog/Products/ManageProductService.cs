@@ -1,7 +1,9 @@
-﻿using iLeafDecor.Application.Common;
+﻿using iLeafDecor.Application.Catalog.ProductImages;
+using iLeafDecor.Application.Common;
 using iLeafDecor.Data.EF;
 using iLeafDecor.Data.Entities;
 using iLeafDecor.Ultilities.Exceptions;
+using iLeafDecor.ViewModels.Catalog.ProductImages;
 using iLeafDecor.ViewModels.Catalog.Products;
 using iLeafDecor.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
@@ -48,7 +50,7 @@ namespace iLeafDecor.Application.Catalog.Products
             };
 
             // Save image
-            if (request.ThumbnailImage!= null)
+            if (request.ThumbnailImage != null)
             {
                 product.ProductImages = new List<ProductImage>()
                 {
@@ -64,7 +66,8 @@ namespace iLeafDecor.Application.Catalog.Products
                 };
             }
             _context.Products.Add(product);
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return product.ID;
         }
 
         public async Task<int> Update(ProductUpdateRequest request)
@@ -128,24 +131,70 @@ namespace iLeafDecor.Application.Catalog.Products
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<int> AddImages(int productID, List<IFormFile> files)
+        public async Task<int> AddImage(int productID, ProductImageCreateRequest request)
         {
-            throw new NotImplementedException();
+            var productImage = new ProductImage()
+            {
+                ProductID = productID,
+                Caption = request.Caption,
+                CreatedDate = DateTime.Now,
+                IsDefault = request.IsDefault,
+                SortOrder = request.SortOrder
+            };
+
+            // Save image
+            if (request.ImageFile != null)
+            {
+                productImage.ImagePath = await SaveFile(request.ImageFile);
+                productImage.FileSize = request.ImageFile.Length;
+            }
+
+            _context.ProductImages.Add(productImage);
+            await _context.SaveChangesAsync();
+            return productImage.ID;
         }
 
-        public Task<int> RemoveImages(int imageID)
+        public async Task<int> RemoveImage(int imageID)
         {
-            throw new NotImplementedException();
+            var productImage = await _context.ProductImages.FindAsync(imageID);
+            if (productImage == null)
+                throw new ILeafException($"Can not find an image with id {imageID}");
+            _context.ProductImages.Remove(productImage);
+            return await _context.SaveChangesAsync();
+
         }
 
-        public Task<int> UpdateImages(int imageID, string caption, bool isDefault)
+        public async Task<int> UpdateImage(int imageID, ProductImageUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var productImage = await _context.ProductImages.FindAsync(imageID);
+            if (productImage == null)
+                throw new ILeafException($"Can not find an image with id {imageID}");
+
+            // Save image
+            if (request.ImageFile != null)
+            {
+                productImage.ImagePath = await SaveFile(request.ImageFile);
+                productImage.FileSize = request.ImageFile.Length;
+            }
+
+            _context.ProductImages.Update(productImage);
+            return await _context.SaveChangesAsync();
         }
 
-        public Task<List<ProductImageViewModel>> GetListImage(int productID)
+        public async Task<List<ProductImageViewModel>> GetListImages(int productID)
         {
-            throw new NotImplementedException();
+            return await _context.ProductImages.Where(x => x.ProductID == productID)
+                .Select(i => new ProductImageViewModel()
+                {
+                    ID = i.ID,
+                    Caption = i.Caption,
+                    CreatedDate = i.CreatedDate,
+                    FileSize = i.FileSize,
+                    ImagePath = i.ImagePath,
+                    IsDefault = i.IsDefault,
+                    ProductID = i.ProductID,
+                    SortOrder = i.SortOrder
+                }).ToListAsync();
         }
 
         public async Task AddViewCount(int productID)
@@ -162,15 +211,15 @@ namespace iLeafDecor.Application.Catalog.Products
                         join pt in _context.ProductTranslations on p.ID equals pt.ProductID
                         join pic in _context.ProductInCategories on p.ID equals pic.ProductID
                         join c in _context.Categories on pic.CategoryID equals c.ID
-                        select new { p, pt, pic};
+                        select new { p, pt, pic };
 
             // Filter
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x=>x.pt.Name.Contains(request.Keyword));
+                query = query.Where(x => x.pt.Name.Contains(request.Keyword));
 
-            if(request.CategoryIDs.Count > 0)
+            if (request.CategoryIDs.Count > 0)
             {
-                query = query.Where(p=>request.CategoryIDs.Contains(p.pic.CategoryID));
+                query = query.Where(p => request.CategoryIDs.Contains(p.pic.CategoryID));
             }
 
             // Paging
@@ -209,6 +258,50 @@ namespace iLeafDecor.Application.Catalog.Products
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
             return fileName;
+        }
+
+        public async Task<ProductViewModel> GetByID(int productID, string languageID)
+        {
+            var product = await _context.Products.FindAsync(productID);
+            var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductID == productID && x.LanguageID == languageID);
+
+            var productViewModel = new ProductViewModel()
+            {
+                ID = product.ID,
+                CreatedDate = product.CreatedDate,
+                Description = productTranslation != null ? productTranslation.Description : null,
+                LanguageID = productTranslation.LanguageID,
+                Details = productTranslation != null ? productTranslation.Details : null,
+                Name = productTranslation != null ? productTranslation.Name : null,
+                Price = product.Price,
+                SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
+                SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
+                SeoTittle = productTranslation != null ? productTranslation.SeoTittle : null,
+                Stock = product.Stock,
+                ViewCount = product.ViewCount
+            };
+            return productViewModel;
+        }
+
+        public async Task<ProductImageViewModel> GetImageByID(int imageID)
+        {
+            var image = await _context.ProductImages.FindAsync(imageID);
+            if (image == null)
+                throw new ILeafException($"Can not find an image with id {imageID}");
+
+            var viewModel = new ProductImageViewModel()
+            {
+                ID = image.ID,
+                Caption = image.Caption,
+                CreatedDate = image.CreatedDate,
+                FileSize = image.FileSize,
+                ImagePath = image.ImagePath,
+                IsDefault = image.IsDefault,
+                ProductID = image.ProductID,
+                SortOrder = image.SortOrder
+            };
+
+            return viewModel;
         }
     }
 }

@@ -7,7 +7,6 @@ namespace iLeafDecor.Application.Catalog.Products
 {
     public interface IPublicProductService
     {
-        public Task<PagedResult<ProductViewModel>> GetAllByCategoryID(GetPublicProductPagingRequest request);
-        public Task<List<ProductViewModel>> GetAll();
+        public Task<PagedResult<ProductViewModel>> GetAllByCategoryID(string languageID, GetPublicProductPagingRequest request);
     }
 }

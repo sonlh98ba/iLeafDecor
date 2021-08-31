@@ -1,4 +1,5 @@
 using iLeafDecor.Application.Catalog.Products;
+using iLeafDecor.Application.Common;
 using iLeafDecor.Data.EF;
 using iLeafDecor.Ultilities.Constants;
 using Microsoft.AspNetCore.Builder;
@@ -32,7 +33,10 @@ namespace iLeafDecor.BackendAPI
                 options => options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
             // Declare DI
+            services.AddTransient<IStorageService, FileStorageService>();
+
             services.AddTransient<IPublicProductService, PublicProductService>();
+            services.AddTransient<IManageProductService, ManageProductService>();
 
             services.AddControllersWithViews();
 
