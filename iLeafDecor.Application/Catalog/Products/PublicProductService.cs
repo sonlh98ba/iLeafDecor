@@ -17,39 +17,14 @@ namespace iLeafDecor.Application.Catalog.Products
             _context = context;
         }
 
-        public async Task<List<ProductViewModel>> GetAll()
-        {
-            var query = from p in _context.Products
-                        join pt in _context.ProductTranslations on p.ID equals pt.ProductID
-                        join pic in _context.ProductInCategories on p.ID equals pic.ProductID
-                        join c in _context.Categories on pic.CategoryID equals c.ID
-                        select new { p, pt, pic };
-
-            var data = await query.Select(x => new ProductViewModel()
-                            {
-                                ID = x.p.ID,
-                                Name = x.pt.Name,
-                                Price = x.p.Price,
-                                CreatedDate = x.p.CreatedDate,
-                                Description = x.pt.Description,
-                                Details = x.pt.Details,
-                                LanguageID = x.pt.LanguageID,
-                                SeoAlias = x.pt.SeoAlias,
-                                SeoDescription = x.pt.SeoDescription,
-                                SeoTittle = x.pt.SeoTittle,
-                                Stock = x.p.Stock,
-                                ViewCount = x.p.ViewCount
-                            }).ToListAsync();
-            return data;
-        }
-
-        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryID(GetPublicProductPagingRequest request)
+        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryID(string languageID, GetPublicProductPagingRequest request)
         {
             // Select all table
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ID equals pt.ProductID
                         join pic in _context.ProductInCategories on p.ID equals pic.ProductID
                         join c in _context.Categories on pic.CategoryID equals c.ID
+                        where pt.LanguageID == languageID
                         select new { p, pt, pic };
 
             // Filter
