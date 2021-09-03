@@ -1,9 +1,13 @@
 using iLeafDecor.Application.Catalog.Products;
+using iLeafDecor.Application.Common;
+using iLeafDecor.Application.System.Users;
 using iLeafDecor.Data.EF;
+using iLeafDecor.Data.Entities;
 using iLeafDecor.Ultilities.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,8 +35,19 @@ namespace iLeafDecor.BackendAPI
             services.AddDbContext<ILeafDBContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<ILeafDBContext>()
+                .AddDefaultTokenProviders();
+
             // Declare DI
+            services.AddTransient<IStorageService, FileStorageService>();
+
             services.AddTransient<IPublicProductService, PublicProductService>();
+            services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddControllersWithViews();
 

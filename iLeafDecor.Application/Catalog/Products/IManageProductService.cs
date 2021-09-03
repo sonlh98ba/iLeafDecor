@@ -1,4 +1,6 @@
-﻿using iLeafDecor.ViewModels.Catalog.Products;
+﻿using iLeafDecor.Application.Catalog.ProductImages;
+using iLeafDecor.ViewModels.Catalog.ProductImages;
+using iLeafDecor.ViewModels.Catalog.Products;
 using iLeafDecor.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -14,6 +16,8 @@ namespace iLeafDecor.Application.Catalog.Products
 
         Task<int> Delete(int productID);
 
+        Task<ProductViewModel> GetByID(int productID, string languageID);
+
         Task<bool> UpdatePrice(int productID, decimal newPrice);
 
         Task<bool> UpdateStock(int productID, int addedQuantity);
@@ -21,9 +25,10 @@ namespace iLeafDecor.Application.Catalog.Products
         Task AddViewCount(int productID);
 
         Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
-        Task<int> AddImages(int productID, List<IFormFile> files);
-        Task<int> RemoveImages(int imageID);
-        Task<int> UpdateImages(int imageID, string caption, bool isDefault);
-        Task<List<ProductImageViewModel>> GetListImage(int productID);
+        Task<int> AddImage(int productID, ProductImageCreateRequest request);
+        Task<int> RemoveImage(int imageID);
+        Task<int> UpdateImage(int imageID, ProductImageUpdateRequest request);
+        Task<ProductImageViewModel> GetImageByID(int imageID);
+        Task<List<ProductImageViewModel>> GetListImages(int productID);
     }
 }
