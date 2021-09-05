@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Hosts", "3. Hosts", "{FB67C67C-EE66-453E-A128-AC2D4700367A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLeafDecor.AdminApp", "iLeafDecor.AdminApp\iLeafDecor.AdminApp.csproj", "{8ADF0288-5C26-4C9F-B6D8-0C4015945621}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{0FD0C6E0-B657-45A3-8CF1-CB2FBA9EEEB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FD0C6E0-B657-45A3-8CF1-CB2FBA9EEEB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FD0C6E0-B657-45A3-8CF1-CB2FBA9EEEB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ADF0288-5C26-4C9F-B6D8-0C4015945621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ADF0288-5C26-4C9F-B6D8-0C4015945621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ADF0288-5C26-4C9F-B6D8-0C4015945621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ADF0288-5C26-4C9F-B6D8-0C4015945621}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{13D23142-1F8F-42E8-9F83-4C3B654FD526} = {D317BB51-4413-481B-8AFD-4237F98E02E5}
 		{5A9678C5-89C8-4EB6-95A8-9E915227BE9D} = {D317BB51-4413-481B-8AFD-4237F98E02E5}
 		{0FD0C6E0-B657-45A3-8CF1-CB2FBA9EEEB7} = {FB67C67C-EE66-453E-A128-AC2D4700367A}
+		{8ADF0288-5C26-4C9F-B6D8-0C4015945621} = {FB67C67C-EE66-453E-A128-AC2D4700367A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {562F28A5-F875-487A-81CF-34AE207CB0D3}
