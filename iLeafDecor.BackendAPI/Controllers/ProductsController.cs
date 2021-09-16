@@ -16,19 +16,17 @@ namespace iLeafDecor.BackendAPI.Controllers
     [Authorize]
     public class ProductsController : ControllerBase
     {
-        private readonly IPublicProductService _publicProductService;
-        private readonly IManageProductService _manageProductService;
-        public ProductsController(IPublicProductService publicProductService, IManageProductService manageProductService)
+        private readonly IProductService _productService;
+        public ProductsController(IProductService productService)
         {
-            _publicProductService = publicProductService;
-            _manageProductService = manageProductService;
+            _productService = productService;
         }
 
         // http://localhost:port/products?pageIndex=1&pageSize=10&CategoryID=
         [HttpGet("{languageID}")]
         public async Task<IActionResult> GetAllPaging(string languageID, [FromQuery] GetPublicProductPagingRequest request)
         {
-            var products = await _publicProductService.GetAllByCategoryID(languageID, request);
+            var products = await _productService.GetAllByCategoryID(languageID, request);
             return Ok(products);
         }
 
@@ -36,7 +34,7 @@ namespace iLeafDecor.BackendAPI.Controllers
         [HttpGet("{productID}/{languageID}")]
         public async Task<IActionResult> GetByID(int productID, string languageID)
         {
-            var product = await _manageProductService.GetByID(productID, languageID);
+            var product = await _productService.GetByID(productID, languageID);
             if (product == null)
                 return BadRequest("Can not find product!");
             return Ok(product);
@@ -50,13 +48,13 @@ namespace iLeafDecor.BackendAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var productID = await _manageProductService.Create(request);
+            var productID = await _productService.Create(request);
             if (productID == 0)
             {
                 return BadRequest();
             }
 
-            var product = await _manageProductService.GetByID(productID, request.LanguageID);
+            var product = await _productService.GetByID(productID, request.LanguageID);
             return CreatedAtAction(nameof(GetByID),new {id = productID} ,product);
         }
 
@@ -68,7 +66,7 @@ namespace iLeafDecor.BackendAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var affectedResult = await _manageProductService.Update(request);
+            var affectedResult = await _productService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();
             return Ok();
@@ -77,7 +75,7 @@ namespace iLeafDecor.BackendAPI.Controllers
         [HttpDelete("{productID}")]
         public async Task<IActionResult> Delete(int productID)
         {
-            var affectedResult = await _manageProductService.Delete(productID);
+            var affectedResult = await _productService.Delete(productID);
             if (affectedResult == 0)
                 return BadRequest();
             return Ok();
@@ -86,7 +84,7 @@ namespace iLeafDecor.BackendAPI.Controllers
         [HttpPatch("{productID}/{newPrice}")]
         public async Task<IActionResult> UpdatePrice(int productID, decimal newPrice)
         {
-            var isSuccessful = await _manageProductService.UpdatePrice(productID, newPrice);
+            var isSuccessful = await _productService.UpdatePrice(productID, newPrice);
             if (isSuccessful)
                 return Ok();
 
@@ -101,11 +99,11 @@ namespace iLeafDecor.BackendAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var imageID = await _manageProductService.AddImage(productID, request);
+            var imageID = await _productService.AddImage(productID, request);
             if (imageID == 0)
                 return BadRequest();
 
-            var image = await _manageProductService.GetImageByID(imageID);
+            var image = await _productService.GetImageByID(imageID);
             return CreatedAtAction(nameof(GetImageByID), new { id = imageID }, image);
         }
 
@@ -116,7 +114,7 @@ namespace iLeafDecor.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _manageProductService.UpdateImage(imageID, request);
+            var result = await _productService.UpdateImage(imageID, request);
             if (result == 0)
                 return BadRequest();
 
@@ -130,7 +128,7 @@ namespace iLeafDecor.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _manageProductService.RemoveImage(imageId);
+            var result = await _productService.RemoveImage(imageId);
             if (result == 0)
                 return BadRequest();
 
@@ -140,7 +138,7 @@ namespace iLeafDecor.BackendAPI.Controllers
         [HttpGet("{productID}/images/{imageID}")]
         public async Task<IActionResult> GetImageByID(int productID, int imageID)
         {
-            var image = await _manageProductService.GetImageByID(imageID);
+            var image = await _productService.GetImageByID(imageID);
             if (image == null)
                 return BadRequest("Can not find product!");
             return Ok(image);

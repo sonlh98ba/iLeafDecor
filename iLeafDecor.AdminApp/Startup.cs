@@ -32,12 +32,17 @@ namespace iLeafDecor.AdminApp
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/User/Login/";
+                    options.LoginPath = "/Login/Index";
                     options.AccessDeniedPath = "/User/Forbidden/";
                 });
 
             services.AddControllersWithViews()
                      .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
 
             services.AddTransient<IUserApiClient, UserApiClient>();
 
@@ -73,7 +78,7 @@ namespace iLeafDecor.AdminApp
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
