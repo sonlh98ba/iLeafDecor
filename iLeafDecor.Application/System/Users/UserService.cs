@@ -76,7 +76,8 @@ namespace iLeafDecor.Application.System.Users
                 FirstName = user.FirstName,
                 DOB = user.DOB,
                 ID = user.Id,
-                LastName = user.LastName
+                LastName = user.LastName,
+                UserName = user.UserName
             };
             return new ApiSuccessResult<UserVM>(userVM);
         }
@@ -108,7 +109,9 @@ namespace iLeafDecor.Application.System.Users
             //4. Select and projection
             var pagedResult = new PagedResult<UserVM>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data
             };
             return new ApiSuccessResult<PagedResult<UserVM>>(pagedResult);
