@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace iLeafDecor.Application.Catalog.Products
 {
-    public interface IManageProductService
+    public interface IProductService
     {
         Task<int> Create(ProductCreateRequest request);
 
@@ -30,5 +30,7 @@ namespace iLeafDecor.Application.Catalog.Products
         Task<int> UpdateImage(int imageID, ProductImageUpdateRequest request);
         Task<ProductImageViewModel> GetImageByID(int imageID);
         Task<List<ProductImageViewModel>> GetListImages(int productID);
+
+        public Task<PagedResult<ProductViewModel>> GetAllByCategoryID(string languageID, GetPublicProductPagingRequest request);
     }
 }

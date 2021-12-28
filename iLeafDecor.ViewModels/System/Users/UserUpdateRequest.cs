@@ -5,8 +5,10 @@ using System.Text;
 
 namespace iLeafDecor.ViewModels.System.Users
 {
-    public class RegisterRequest
+    public class UserUpdateRequest
     {
+        public Guid ID { get; set; }
+
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
@@ -22,16 +24,5 @@ namespace iLeafDecor.ViewModels.System.Users
 
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
-
-        [Display(Name = "User Name")]
-        public string UserName { get; set; }
-
-        [Display(Name = "Password")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Display(Name = "Confirm Password")]
-        [DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
     }
 }
