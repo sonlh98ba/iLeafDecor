@@ -16,5 +16,7 @@ namespace iLeafDecor.ViewModels.System.Users
         public string UserName { get; set; }
 
         public string Email { get; set; }
+
+        public DateTime DOB { get; set; }
     }
 }
