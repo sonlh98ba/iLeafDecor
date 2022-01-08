@@ -1,8 +1,6 @@
 ﻿using iLeafDecor.ViewModels.Common;
 using iLeafDecor.ViewModels.System.Users;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace iLeafDecor.Application.System.Users
@@ -18,5 +16,9 @@ namespace iLeafDecor.Application.System.Users
         Task<ApiResult<PagedResult<UserVM>>> GetUsersPaging(GetUserPagingRequest request);
 
         Task<ApiResult<UserVM>> GetById(Guid id);
+
+        Task<ApiResult<bool>> Delete(Guid id);
+
+        Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
     }
 }

@@ -6,20 +6,19 @@
 }
 
 <div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Create New User</h1>
-
-    <!-- DataTales Example -->
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Tạo người dùng mới</li>
+    </ol>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a class="btn btn-success" asp-action="Index" asp-controller="User">Back</a>
+            <a class="btn btn-success" asp-action="Index" asp-controller="User">Về danh sách</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <div class="col-md-4">
                     <form asp-action="Create">
-                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="FirstName" class="control-label"></label>
                             <input asp-for="FirstName" class="form-control" />

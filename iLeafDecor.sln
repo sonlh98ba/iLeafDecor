@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Hosts", "3. Hosts", "{FB67C67C-EE66-453E-A128-AC2D4700367A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLeafDecor.AdminApp", "iLeafDecor.AdminApp\iLeafDecor.AdminApp.csproj", "{8ADF0288-5C26-4C9F-B6D8-0C4015945621}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iLeafDecor.AdminApp", "iLeafDecor.AdminApp\iLeafDecor.AdminApp.csproj", "{8ADF0288-5C26-4C9F-B6D8-0C4015945621}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

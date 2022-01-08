@@ -1,6 +1,7 @@
-﻿@using iLeafDecor.ViewModels.System.Users
-@model LoginRequest
+﻿@model iLeafDecor.ViewModels.System.Users.LoginRequest
+
 @{
+    ViewData["Title"] = "Đăng nhập";
     Layout = null;
 }
 
@@ -15,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Đăng nhập hệ thống</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,7 +45,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Đăng nhập</h1>
                                     </div>
                                     <form class="user" asp-action="Index" asp-controller="Login" method="post">
                                         <div class="form-group">
@@ -56,6 +57,7 @@
                                             <input type="password" class="form-control form-control-user"
                                                    asp-for="Password" placeholder="Password">
                                         </div>
+                                        <div asp-validation-summary="All" class="text-danger"></div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" asp-for="RememberMe">

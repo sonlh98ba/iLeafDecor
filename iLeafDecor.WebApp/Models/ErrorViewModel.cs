@@ -1,5 +1,3 @@
-using System;
-
 namespace iLeafDecor.WebApp.Models
 {
     public class ErrorViewModel

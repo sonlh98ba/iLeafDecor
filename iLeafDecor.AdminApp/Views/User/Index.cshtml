@@ -2,36 +2,69 @@
 @model PagedResult<iLeafDecor.ViewModels.System.Users.UserVM>
 
 @{
-    ViewData["Title"] = "Users List";
+    ViewData["Title"] = "Danh sách người dùng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+
 <div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Users List</h1>
-
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách người dùng</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="cold-md-3">
+                                <button type="submit" class="btn btn-primary">Tìm</button>
+                                <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-dark">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+
         <div class="card-body">
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                }
+            </div>
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>
-                                First Name
+                                Tên
                             </th>
                             <th>
-                                Last Name
+                                Họ
                             </th>
                             <th>
-                                Phone Number
+                                Số điện thoại
                             </th>
                             <th>
-                                User Name
+                                Tài khoản
                             </th>
                             <th>
                                 Email
@@ -59,16 +92,17 @@
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                                    @Html.ActionLink("Xem", "Details", new { id = item.ID }) |
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.ID }) |
+                                    @Html.ActionLink("Phân quyền", "RoleAssign", new { id = item.ID })
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
+            @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>
-
 </div>

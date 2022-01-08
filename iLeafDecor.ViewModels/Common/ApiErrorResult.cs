@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iLeafDecor.ViewModels.Common
+﻿namespace iLeafDecor.ViewModels.Common
 {
     public class ApiErrorResult<T> : ApiResult<T>
     {

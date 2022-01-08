@@ -180,7 +180,7 @@ namespace iLeafDecor.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "ac8e37ad-85e8-4577-9cb5-a1ef5ddc1b7e",
+                            ConcurrencyStamp = "8601d8fa-aa1c-47aa-ab1e-0dae87ca1f90",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,7 +257,7 @@ namespace iLeafDecor.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc3765b0-3790-4006-98a4-1155fb1a7a04",
+                            ConcurrencyStamp = "cc2a0459-5b2e-4b99-a2bd-4565beef509b",
                             DOB = new DateTime(1998, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "sonlh98ba@gmail.com",
                             EmailConfirmed = true,
@@ -266,7 +266,7 @@ namespace iLeafDecor.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "sonlh98ba@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAENm9NFXultBd2W2ppPg7NaBiDOHUJXHID4LSToQxncdsGc0HbQr1Q1+65JIraGQi4Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJOx503ZgKe2oIa9liTPRZQfCbt9H0gXDR3b0ixq3F9REhQAr8YrbjSeSAm/PvXr1Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -400,7 +400,7 @@ namespace iLeafDecor.Data.Migrations
                         {
                             ID = 1,
                             CategoryID = 1,
-                            LanguageID = "vi-VN",
+                            LanguageID = "vi",
                             Name = "Ngoại thất",
                             SeoAlias = "ngoai-that",
                             SeoDescription = "Sản phẩm ngoại thất",
@@ -410,7 +410,7 @@ namespace iLeafDecor.Data.Migrations
                         {
                             ID = 2,
                             CategoryID = 1,
-                            LanguageID = "en-US",
+                            LanguageID = "en",
                             Name = "Outdoors",
                             SeoAlias = "outdoors",
                             SeoDescription = "The products for outdoor decor",
@@ -420,7 +420,7 @@ namespace iLeafDecor.Data.Migrations
                         {
                             ID = 3,
                             CategoryID = 2,
-                            LanguageID = "vi-VN",
+                            LanguageID = "vi",
                             Name = "Phòng ngủ",
                             SeoAlias = "phong-ngu",
                             SeoDescription = "Sản phẩm nội thất phòng ngủ",
@@ -430,7 +430,7 @@ namespace iLeafDecor.Data.Migrations
                         {
                             ID = 4,
                             CategoryID = 2,
-                            LanguageID = "en-US",
+                            LanguageID = "en",
                             Name = "Bedroom",
                             SeoAlias = "bedroom",
                             SeoDescription = "The products for bedroom decor",
@@ -496,13 +496,13 @@ namespace iLeafDecor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            ID = "vi-VN",
+                            ID = "vi",
                             IsDefault = true,
                             Name = "Tiếng Việt"
                         },
                         new
                         {
-                            ID = "en-US",
+                            ID = "en",
                             IsDefault = false,
                             Name = "English"
                         });
@@ -608,7 +608,7 @@ namespace iLeafDecor.Data.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedDate = new DateTime(2021, 8, 23, 23, 22, 2, 754, DateTimeKind.Local).AddTicks(8623),
+                            CreatedDate = new DateTime(2022, 1, 6, 18, 13, 58, 540, DateTimeKind.Local).AddTicks(1991),
                             Price = 200000m,
                             Stock = 0,
                             ViewCount = 0
@@ -732,7 +732,7 @@ namespace iLeafDecor.Data.Migrations
                             ID = 1,
                             Description = "Ghế treo hai chỗ ngồi ngoài trời - Màu xám",
                             Details = "Ghế treo hai chỗ ngồi ngoài trời - Màu xám",
-                            LanguageID = "vi-VN",
+                            LanguageID = "vi",
                             Name = "Ghế treo hai chỗ ngồi ngoài trời - Màu xám",
                             ProductID = 1,
                             SeoAlias = "ghe-treo-hai-cho-ngoi-ngoai-troi",
@@ -744,7 +744,7 @@ namespace iLeafDecor.Data.Migrations
                             ID = 2,
                             Description = "Outdoor Two Seater Wicker Hanging Chair - Grey",
                             Details = "Outdoor Two Seater Wicker Hanging Chair - Grey",
-                            LanguageID = "en-US",
+                            LanguageID = "en",
                             Name = "Outdoor Two Seater Wicker Hanging Chair - Grey",
                             ProductID = 1,
                             SeoAlias = "outdoor-two-seater-wicker-hanging-chair-grey",
