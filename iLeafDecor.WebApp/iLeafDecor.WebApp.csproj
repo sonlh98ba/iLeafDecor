@@ -13,4 +13,8 @@
     <PackageReference Include="LazZiya.TagHelpers" Version="6.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\iLeafDecor.ApiIntegration\iLeafDecor.ApiIntegration.csproj" />
+  </ItemGroup>
+
 </Project>

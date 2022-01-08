@@ -3,7 +3,7 @@ using iLeafDecor.ViewModels.System.Users;
 using System;
 using System.Threading.Tasks;
 
-namespace iLeafDecor.AdminApp.Services
+namespace iLeafDecor.ApiIntegration
 {
     public interface IUserApiClient
     {

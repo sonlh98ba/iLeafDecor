@@ -1,24 +1,24 @@
-﻿using iLeafDecor.ViewModels.Catalog.Categories;
+﻿using iLeafDecor.ViewModels.Utilities.Slides;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace iLeafDecor.AdminApp.Services
+namespace iLeafDecor.ApiIntegration
 {
-    public class CategoryApiClient : BaseApiClient, ICategoryApiClient
+    public class SlideApiClient : BaseApiClient, ISlideApiClient
     {
-        public CategoryApiClient(IHttpClientFactory httpClientFactory,
+        public SlideApiClient(IHttpClientFactory httpClientFactory,
                    IHttpContextAccessor httpContextAccessor,
                     IConfiguration configuration)
             : base(httpClientFactory, httpContextAccessor, configuration)
         {
         }
 
-        public async Task<List<CategoryVM>> GetAll(string languageId)
+        public async Task<List<SlideVM>> GetAll()
         {
-            return await GetListAsync<CategoryVM>("/api/categories?languageId=" + languageId);
+            return await GetListAsync<SlideVM>("/api/slides");
         }
     }
 }

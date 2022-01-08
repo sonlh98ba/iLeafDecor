@@ -16,8 +16,13 @@ namespace iLeafDecor.ViewModels.Catalog.Products
         public string Details { get; set; }
         public string SeoDescription { get; set; }
         public string SeoTittle { get; set; }
+
         public string LanguageID { get; set; }
         public string SeoAlias { get; set; }
+
+        public bool? IsFeatured { get; set; }
+        public string ThumbnailImage { get; set; }
+
         public List<string> Categories { get; set; } = new List<string>();
     }
 }

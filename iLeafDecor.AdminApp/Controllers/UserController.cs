@@ -1,4 +1,4 @@
-﻿using iLeafDecor.AdminApp.Services;
+﻿using iLeafDecor.ApiIntegration;
 using iLeafDecor.ViewModels.Common;
 using iLeafDecor.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
@@ -67,7 +67,7 @@ namespace iLeafDecor.AdminApp.Controllers
             {
                 TempData["result"] = "Thêm người dùng thành công";
                 return RedirectToAction("Index");
-            }    
+            }
 
             ModelState.AddModelError("", result.Message);
             return View(request);

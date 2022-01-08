@@ -5,6 +5,7 @@ using iLeafDecor.Application.Common;
 using iLeafDecor.Application.System.Languages;
 using iLeafDecor.Application.System.Roles;
 using iLeafDecor.Application.System.Users;
+using iLeafDecor.Application.Utilities.Slides;
 using iLeafDecor.Data.EF;
 using iLeafDecor.Data.Entities;
 using iLeafDecor.Ultilities.Constants;
@@ -54,6 +55,7 @@ namespace iLeafDecor.BackendAPI
             services.AddTransient<ILanguageService, LanguageService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<ISlideService, SlideService>();
 
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();

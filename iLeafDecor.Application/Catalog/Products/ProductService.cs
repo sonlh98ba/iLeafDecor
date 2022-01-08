@@ -386,5 +386,39 @@ namespace iLeafDecor.Application.Catalog.Products
             await _context.SaveChangesAsync();
             return new ApiSuccessResult<bool>();
         }
+
+        public async Task<List<ProductVM>> GetFeaturedProducts(string languageId, int take)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.ID equals pt.ProductID
+                        join pic in _context.ProductInCategories on p.ID equals pic.ProductID into ppic
+                        //join pi in _context.ProductImages.Where(x => x.IsDefault == true) on p.Id equals pi.ProductId
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryID equals c.ID into picc
+                        from c in picc.DefaultIfEmpty()
+                        where pt.LanguageID == languageId
+                        select new { p, pt, pic };
+
+            var data = await query.OrderByDescending(x => x.p.CreatedDate).Take(take)
+                .Select(x => new ProductVM()
+                {
+                    ID = x.p.ID,
+                    Name = x.pt.Name,
+                    CreatedDate = x.p.CreatedDate,
+                    Description = x.pt.Description,
+                    Details = x.pt.Details,
+                    LanguageID = x.pt.LanguageID,
+                    Price = x.p.Price,
+                    SeoAlias = x.pt.SeoAlias,
+                    SeoDescription = x.pt.SeoDescription,
+                    SeoTittle = x.pt.SeoTittle,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    //ThumbnailImage = x.pi.ImagePath
+                }).ToListAsync();
+
+            return data;
+        }
     }
 }

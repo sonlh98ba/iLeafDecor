@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace iLeafDecor.AdminApp.Services
+namespace iLeafDecor.ApiIntegration
 {
     public interface ICategoryApiClient
     {

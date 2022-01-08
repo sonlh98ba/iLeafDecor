@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iLeafDecor.AdminApp.Services
+namespace iLeafDecor.ApiIntegration
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient
     {
@@ -103,6 +104,12 @@ namespace iLeafDecor.AdminApp.Services
         {
             var data = await GetAsync<ProductVM>($"/api/products/{id}/{languageId}");
 
+            return data;
+        }
+
+        public async Task<List<ProductVM>> GetFeaturedProducts(string languageId, int take)
+        {
+            var data = await GetListAsync<ProductVM>($"/api/products/featured/{languageId}/{take}");
             return data;
         }
     }

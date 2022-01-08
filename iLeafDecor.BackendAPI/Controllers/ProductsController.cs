@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace iLeafDecor.BackendAPI.Controllers
 {
+    //api/products
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -34,6 +35,14 @@ namespace iLeafDecor.BackendAPI.Controllers
             if (product == null)
                 return BadRequest("Cannot find product");
             return Ok(product);
+        }
+
+        [HttpGet("featured/{languageId}/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeaturedProducts(int take, string languageId)
+        {
+            var products = await _productService.GetFeaturedProducts(languageId, take);
+            return Ok(products);
         }
 
         [HttpPost]

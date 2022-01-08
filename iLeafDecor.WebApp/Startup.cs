@@ -1,11 +1,14 @@
+using iLeafDecor.ApiIntegration;
 using iLeafDecor.WebApp.LocalizationResources;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Globalization;
 
 namespace iLeafDecor.WebApp
@@ -22,6 +25,7 @@ namespace iLeafDecor.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             var cultures = new[]
            {
                 new CultureInfo("en"),
@@ -57,7 +61,14 @@ namespace iLeafDecor.WebApp
                         o.SupportedUICultures = cultures;
                         o.DefaultRequestCulture = new RequestCulture("vi");
                     };
-                }); ;
+                });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<ISlideApiClient, SlideApiClient>();
+            services.AddTransient<IProductApiClient, ProductApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +90,7 @@ namespace iLeafDecor.WebApp
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
             app.UseRequestLocalization();
             app.UseEndpoints(endpoints =>
             {

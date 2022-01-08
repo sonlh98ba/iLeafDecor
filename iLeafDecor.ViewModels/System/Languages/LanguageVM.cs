@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iLeafDecor.ViewModels.System.Languages
+﻿namespace iLeafDecor.ViewModels.System.Languages
 {
     public class LanguageVM
     {

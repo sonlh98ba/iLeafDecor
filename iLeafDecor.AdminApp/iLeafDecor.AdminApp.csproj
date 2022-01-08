@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\iLeafDecor.ApiIntegration\iLeafDecor.ApiIntegration.csproj" />
     <ProjectReference Include="..\iLeafDecor.Ultilities\iLeafDecor.Ultilities.csproj" />
     <ProjectReference Include="..\iLeafDecor.ViewModels\iLeafDecor.ViewModels.csproj" />
   </ItemGroup>

@@ -1,5 +1,4 @@
 ﻿using iLeafDecor.ViewModels.Common;
-using System.Collections.Generic;
 
 namespace iLeafDecor.ViewModels.Catalog.Products
 {

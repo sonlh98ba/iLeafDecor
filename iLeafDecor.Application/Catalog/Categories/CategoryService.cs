@@ -1,9 +1,9 @@
 ﻿using iLeafDecor.Data.EF;
 using iLeafDecor.ViewModels.Catalog.Categories;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace iLeafDecor.Application.Catalog.Categories
 {

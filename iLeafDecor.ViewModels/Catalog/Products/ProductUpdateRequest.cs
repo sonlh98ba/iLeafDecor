@@ -12,6 +12,7 @@ namespace iLeafDecor.ViewModels.Catalog.Products
         public string SeoTittle { get; set; }
         public string LanguageID { get; set; }
         public string SeoAlias { get; set; }
+        public bool? IsFeatured { get; set; }
         public IFormFile ThumbnailImage { get; set; }
     }
 }
