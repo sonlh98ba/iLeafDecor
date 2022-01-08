@@ -17,4 +17,8 @@
     <ProjectReference Include="..\iLeafDecor.ViewModels\iLeafDecor.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\user-content\" />
+  </ItemGroup>
+
 </Project>

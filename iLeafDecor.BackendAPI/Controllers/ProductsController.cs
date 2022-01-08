@@ -13,45 +13,44 @@ namespace iLeafDecor.BackendAPI.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
-        public ProductsController(IProductService productService)
+
+        public ProductsController(
+            IProductService productService)
         {
             _productService = productService;
         }
 
-        // http://localhost:port/products?pageIndex=1&pageSize=10&CategoryID=
-        [HttpGet("{languageID}")]
-        public async Task<IActionResult> GetAllPaging(string languageID, [FromQuery] GetPublicProductPagingRequest request)
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {
-            var products = await _productService.GetAllByCategoryID(languageID, request);
+            var products = await _productService.GetAllPaging(request);
             return Ok(products);
         }
 
-        // http://localhost:port/product/public-paging/1
-        [HttpGet("{productID}/{languageID}")]
-        public async Task<IActionResult> GetByID(int productID, string languageID)
+        [HttpGet("{productId}/{languageId}")]
+        public async Task<IActionResult> GetById(int productId, string languageId)
         {
-            var product = await _productService.GetByID(productID, languageID);
+            var product = await _productService.GetById(productId, languageId);
             if (product == null)
-                return BadRequest("Can not find product!");
+                return BadRequest("Cannot find product");
             return Ok(product);
         }
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var productID = await _productService.Create(request);
-            if (productID == 0)
-            {
+            var productId = await _productService.Create(request);
+            if (productId == 0)
                 return BadRequest();
-            }
 
-            var product = await _productService.GetByID(productID, request.LanguageID);
-            return CreatedAtAction(nameof(GetByID),new {id = productID} ,product);
+            var product = await _productService.GetById(productId, request.LanguageID);
+
+            return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }
 
         [HttpPut]
@@ -61,56 +60,56 @@ namespace iLeafDecor.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             var affectedResult = await _productService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();
             return Ok();
         }
 
-        [HttpDelete("{productID}")]
-        public async Task<IActionResult> Delete(int productID)
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> Delete(int productId)
         {
-            var affectedResult = await _productService.Delete(productID);
+            var affectedResult = await _productService.Delete(productId);
             if (affectedResult == 0)
                 return BadRequest();
             return Ok();
         }
 
-        [HttpPatch("{productID}/{newPrice}")]
-        public async Task<IActionResult> UpdatePrice(int productID, decimal newPrice)
+        [HttpPatch("{productId}/{newPrice}")]
+        public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
-            var isSuccessful = await _productService.UpdatePrice(productID, newPrice);
+            var isSuccessful = await _productService.UpdatePrice(productId, newPrice);
             if (isSuccessful)
                 return Ok();
 
             return BadRequest();
         }
 
-        [HttpPost("{productID}/images")]
-        public async Task<IActionResult> CreateImage(int productID, [FromForm] ProductImageCreateRequest request)
+        //Images
+        [HttpPost("{productId}/images")]
+        public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var imageID = await _productService.AddImage(productID, request);
-            if (imageID == 0)
+            var imageId = await _productService.AddImage(productId, request);
+            if (imageId == 0)
                 return BadRequest();
 
-            var image = await _productService.GetImageByID(imageID);
-            return CreatedAtAction(nameof(GetImageByID), new { id = imageID }, image);
+            var image = await _productService.GetImageById(imageId);
+
+            return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
         }
 
-        [HttpPut("{productId}/images/{imageID}")]
-        public async Task<IActionResult> UpdateImage(int imageID, [FromForm] ProductImageUpdateRequest request)
+        [HttpPut("{productId}/images/{imageId}")]
+        public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _productService.UpdateImage(imageID, request);
+            var result = await _productService.UpdateImage(imageId, request);
             if (result == 0)
                 return BadRequest();
 
@@ -131,13 +130,27 @@ namespace iLeafDecor.BackendAPI.Controllers
             return Ok();
         }
 
-        [HttpGet("{productID}/images/{imageID}")]
-        public async Task<IActionResult> GetImageByID(int productID, int imageID)
+        [HttpGet("{productId}/images/{imageId}")]
+        public async Task<IActionResult> GetImageById(int productId, int imageId)
         {
-            var image = await _productService.GetImageByID(imageID);
+            var image = await _productService.GetImageById(imageId);
             if (image == null)
-                return BadRequest("Can not find product!");
+                return BadRequest("Cannot find product");
             return Ok(image);
+        }
+
+        [HttpPut("{id}/categories")]
+        public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _productService.CategoryAssign(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

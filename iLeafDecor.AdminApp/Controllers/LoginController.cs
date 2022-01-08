@@ -1,4 +1,5 @@
 ﻿using iLeafDecor.AdminApp.Services;
+using iLeafDecor.Ultilities.Constants;
 using iLeafDecor.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -38,17 +39,22 @@ namespace iLeafDecor.AdminApp.Controllers
         public async Task<IActionResult> Index(LoginRequest request)
         {
             if (!ModelState.IsValid)
-                return View(ModelState);
+                return View();
 
             var result = await _userApiClient.Authenticate(request);
-
+            if (result.ResultObj == null)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
             var userPrincipal = this.ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = false
             };
-            HttpContext.Session.SetString("Token", result.ResultObj);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration["DefaultLanguageId"]);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,

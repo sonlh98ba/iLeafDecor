@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace iLeafDecor.ViewModels.System.Users
 {
@@ -26,5 +25,7 @@ namespace iLeafDecor.ViewModels.System.Users
 
         [Display(Name = "Ngày sinh")]
         public DateTime DOB { get; set; }
+
+        public IList<string> Roles { get; set; }
     }
 }
